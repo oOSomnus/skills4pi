@@ -27,7 +27,7 @@ step()  { echo -e "\n${GREEN}==>${NC} ${YELLOW}$1${NC}"; }
 # ============================================================
 # Step 1: 安装 pi
 # ============================================================
-step "1/6 安装 pi coding agent"
+step "1/7 安装 pi coding agent"
 
 if command -v pi &>/dev/null; then
   info "pi 已安装: $(pi --version 2>/dev/null || echo 'unknown')"
@@ -40,39 +40,53 @@ fi
 # ============================================================
 # Step 2: 安装 skills（从 GitHub）
 # ============================================================
-step "2/6 安装 skills"
+step "2/7 安装 skills"
 
 pi install git:github.com/oOSomnus/skills4pi 2>&1
 info "skills 安装完成"
 
 # ============================================================
-# Step 3: 安装 extensions4pi
+# Step 3: 安装 rtk（命令输出压缩工具）
 # ============================================================
-step "3/6 安装 extensions"
+step "3/7 安装 rtk"
+
+# 跳过 brew，直接下载预编译二进制
+if command -v rtk &>/dev/null; then
+  info "rtk 已安装: $(rtk --version 2>/dev/null || echo 'ok')"
+else
+  info "下载 rtk 预编译二进制..."
+  curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+  info "rtk 安装完成"
+fi
+
+# ============================================================
+# Step 4: 安装 extensions4pi
+# ============================================================
+step "4/7 安装 extensions"
 
 pi install git:github.com/oOSomnus/extensions4pi 2>&1
 info "extensions 安装完成"
 
 # ============================================================
-# Step 4: 安装 themes4pi
+# Step 5: 安装 themes4pi
 # ============================================================
-step "4/6 安装 themes"
+step "5/7 安装 themes"
 
 pi install git:github.com/oOSomnus/themes4pi 2>&1
 info "themes 安装完成"
 
 # ============================================================
-# Step 5: 安装 pi-mcp-adapter
+# Step 6: 安装 pi-mcp-adapter
 # ============================================================
-step "5/6 安装 pi-mcp-adapter"
+step "6/7 安装 pi-mcp-adapter"
 
 pi install npm:pi-mcp-adapter 2>&1
 info "pi-mcp-adapter 安装完成"
 
 # ============================================================
-# Step 6: 安装 context-mode
+# Step 7: 安装 context-mode
 # ============================================================
-step "6/6 安装 context-mode"
+step "7/7 安装 context-mode"
 
 info "npm install -g context-mode..."
 npm install -g context-mode 2>&1
@@ -124,6 +138,7 @@ echo ""
 echo "已安装:"
 echo "  pi:             $(pi --version 2>/dev/null || echo 'check')"
 echo "  skills:         github.com/oOSomnus/skills4pi"
+echo "  rtk:            github.com/rtk-ai/rtk"
 echo "  extensions:     github.com/oOSomnus/extensions4pi"
 echo "  themes:         github.com/oOSomnus/themes4pi"
 echo "  mcp-adapter:    pi-mcp-adapter"
