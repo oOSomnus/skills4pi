@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ============================================================
-# skills4pi + themes4pi + context-mode 一键安装脚本
+# skills4pi + extensions4pi + themes4pi + context-mode 一键安装脚本
 # 用法: bash install.sh [--project]
 #   --project: context-mode mcp.json 写入项目级 .pi/mcp.json
 # ============================================================
@@ -27,7 +27,7 @@ step()  { echo -e "\n${GREEN}==>${NC} ${YELLOW}$1${NC}"; }
 # ============================================================
 # Step 1: 安装 pi
 # ============================================================
-step "1/5 安装 pi coding agent"
+step "1/6 安装 pi coding agent"
 
 if command -v pi &>/dev/null; then
   info "pi 已安装: $(pi --version 2>/dev/null || echo 'unknown')"
@@ -40,31 +40,39 @@ fi
 # ============================================================
 # Step 2: 安装 skills（从 GitHub）
 # ============================================================
-step "2/5 安装 skills"
+step "2/6 安装 skills"
 
 pi install git:github.com/oOSomnus/skills4pi 2>&1
 info "skills 安装完成"
 
 # ============================================================
-# Step 3: 安装 themes4pi
+# Step 3: 安装 extensions4pi
 # ============================================================
-step "3/5 安装 themes"
+step "3/6 安装 extensions"
+
+pi install git:github.com/oOSomnus/extensions4pi 2>&1
+info "extensions 安装完成"
+
+# ============================================================
+# Step 4: 安装 themes4pi
+# ============================================================
+step "4/6 安装 themes"
 
 pi install git:github.com/oOSomnus/themes4pi 2>&1
 info "themes 安装完成"
 
 # ============================================================
-# Step 4: 安装 pi-mcp-adapter
+# Step 5: 安装 pi-mcp-adapter
 # ============================================================
-step "4/5 安装 pi-mcp-adapter"
+step "5/6 安装 pi-mcp-adapter"
 
 pi install npm:pi-mcp-adapter 2>&1
 info "pi-mcp-adapter 安装完成"
 
 # ============================================================
-# Step 5: 安装 context-mode
+# Step 6: 安装 context-mode
 # ============================================================
-step "5/5 安装 context-mode"
+step "6/6 安装 context-mode"
 
 info "npm install -g context-mode..."
 npm install -g context-mode 2>&1
@@ -116,6 +124,7 @@ echo ""
 echo "已安装:"
 echo "  pi:             $(pi --version 2>/dev/null || echo 'check')"
 echo "  skills:         github.com/oOSomnus/skills4pi"
+echo "  extensions:     github.com/oOSomnus/extensions4pi"
 echo "  themes:         github.com/oOSomnus/themes4pi"
 echo "  mcp-adapter:    pi-mcp-adapter"
 echo "  context-mode:   $(context-mode --version 2>/dev/null || echo 'installed')"
