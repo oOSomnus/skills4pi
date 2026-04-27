@@ -1,0 +1,10 @@
+{
+  "name": "skills4pi",
+  "version": "1.0.0",
+  "description": "Skills collection for pi coding agent — adapted from mattpocock/skills",
+  "keywords": ["pi-package"],
+  "license": "MIT",
+  "pi": {
+    "skills": ["./"]
+  }
+}
